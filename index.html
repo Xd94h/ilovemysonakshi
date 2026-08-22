@@ -257,6 +257,106 @@
     color:#6f5459;
   }
 
+  .voice-note{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:#fffdfb;
+    border:1px solid #f0dfe4;
+    border-radius:99px;
+    padding:10px 24px 10px 10px;
+    max-width:420px;
+    margin:0 auto 16px;
+    box-shadow:0 14px 30px -18px rgba(122,46,56,0.3);
+  }
+  .vn-play{
+    flex-shrink:0;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--wine), var(--rose));
+    color:#fff;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 20px -8px rgba(122,46,56,0.55);
+    transition:transform .15s ease;
+  }
+  .vn-play:hover{ transform:scale(1.05); }
+  .vn-play:active{ transform:scale(0.95); }
+  .vn-bars{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:2.5px;
+    height:26px;
+    margin:0 6px;
+  }
+  .vn-bars span{
+    display:block;
+    width:2.5px;
+    border-radius:2px;
+    background:var(--rose);
+    transition:height .2s ease;
+  }
+  .vn-bars span:nth-child(1){ height:9px; }
+  .vn-bars span:nth-child(2){ height:15px; }
+  .vn-bars span:nth-child(3){ height:21px; }
+  .vn-bars span:nth-child(4){ height:11px; }
+  .vn-bars span:nth-child(5){ height:17px; }
+  .vn-bars span:nth-child(6){ height:23px; }
+  .vn-bars span:nth-child(7){ height:12px; }
+  .vn-bars span:nth-child(8){ height:19px; }
+  .vn-bars span:nth-child(9){ height:9px; }
+  .vn-bars span:nth-child(10){ height:16px; }
+  .vn-bars span:nth-child(11){ height:22px; }
+  .vn-bars span:nth-child(12){ height:11px; }
+  .vn-bars span:nth-child(13){ height:18px; }
+  .vn-bars span:nth-child(14){ height:14px; }
+  .vn-bars span:nth-child(15){ height:20px; }
+  .vn-bars span:nth-child(16){ height:10px; }
+  .vn-bars span:nth-child(17){ height:16px; }
+  .vn-bars span:nth-child(18){ height:8px; }
+  .vn-bars span:nth-child(19){ height:14px; }
+  .vn-bars span:nth-child(20){ height:12px; }
+  .vn-bars.playing span{
+    animation:vnWave 0.9s ease-in-out infinite;
+  }
+  .vn-bars span:nth-child(odd){ animation-delay:0.05s; }
+  .vn-bars span:nth-child(even){ animation-delay:0.2s; }
+  .vn-bars span:nth-child(3n){ animation-delay:0.35s; }
+  @keyframes vnWave{
+    0%,100%{ height:8px; }
+    50%{ height:23px; }
+  }
+  .vn-label{
+    flex-shrink:0;
+    font-size:12.5px;
+    color:#b79aa0;
+    letter-spacing:0.02em;
+  }
+  .vn-caption{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:18px;
+    color:var(--wine);
+    text-align:center;
+    margin-top:18px;
+    margin-bottom:8px;
+    letter-spacing:0.04em;
+  }
+  .vn-context{
+    font-size:13.5px;
+    color:#8a6a70;
+    text-align:center;
+    max-width:380px;
+    margin:0 auto 8px;
+    line-height:1.6;
+  }
+
   .section-label{
     font-family:'Fraunces', serif;
     font-style:italic;
@@ -495,7 +595,7 @@
     font-weight:500;
     font-size:clamp(1.4rem, 6vw, 1.9rem);
     color:var(--wine-deep);
-    margin-bottom:26px;
+    margin-bottom:38px;
     position:relative;
     display:inline-block;
   }
@@ -509,6 +609,7 @@
   }
 
   #tapBtn{
+    margin-top:18px;
     background:#0a0a0a;
     color:#f4cf7a;
     font-size:16px;
@@ -650,7 +751,7 @@
     <div class="plane">✈️</div>
   </div>
 
-  <div class="mail-line"><span class="env">💌</span><span>A cute surprise for you <3</span></div>
+  <div class="mail-line"><span class="env">💌</span><span>A cute surprise for you &lt;3</span></div>
 
   <button id="openBtn" onclick="openMail()">Open Karo</button>
 </div>
@@ -664,8 +765,8 @@
     Mujhe pata hai maine galti ki hai, aur maine tumhe hurt kiya — jitna maine socha bhi nahi tha.
     Main koi excuse nahi doonga, bas itna kahunga: <span class="highlight">please forgive me</span>,
     kyunki tumhare bina kuch bhi theek nahi lagta. In 9 mahino ne mujhe sikhaya hai ki tum kitni
-    zaroori ho 
-    
+    zaroori ho
+
     i remember the first time we started
 talking.
 you were the reason i got my laugh back.
@@ -689,7 +790,7 @@ i miss you..
   <div class="notes-grid">
     <div class="note-box">
       <span class="emoji">🥹</span>
-      <h3>I'm sorryy my lovee <3</h3>
+      <h3>I'm sorryy my lovee &lt;3</h3>
       <p>We really did love each other. We just messed
 things up with all the misunderstandings,
 doubts, overthinking, our fears and the
@@ -697,7 +798,7 @@ mistakes we both made..</p>
     </div>
     <div class="note-box">
       <span class="emoji">🫶</span>
-      <h3>I'm sorryy my lovee <3</h3>
+      <h3>I'm sorryy my lovee &lt;3</h3>
       <p>I know I was wrong too and I accept that. I just
 hope one day you'll believe in me again and
 understand that we were both wrong but what
@@ -705,7 +806,7 @@ we had was real..</p>
     </div>
     <div class="note-box">
       <span class="emoji">🫂</span>
-      <h3>I'm sorryy my lovee <3</h3>
+      <h3>I'm sorryy my lovee &lt;3</h3>
       <p>
 I hope you come back and I promise this time, no
 more misunderstandings, no more fights, no
@@ -713,7 +814,7 @@ more doubts. Just us, doing it right this time..</p>
     </div>
   </div>
 
-  <div class="section-label">Some cute pictures of Us !! </div>
+  <div class="section-label">Some cute pictures of Us !!</div>
   <div class="polaroid-grid">
     <div class="polaroid">
       <div class="frame">
@@ -785,6 +886,23 @@ more doubts. Just us, doing it right this time..</p>
     <button id="tapBtn" onclick="openImage()">Tap here !!</button>
   </div>
 
+  <div class="final-section" style="border-top:1px dashed #e6c9d1; padding-top:40px; margin-top:40px;">
+    <div class="voice-note">
+      <button class="vn-play" id="vnPlayBtn" onclick="toggleVoice()">▶</button>
+      <div class="vn-bars" id="vnBars">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <span class="vn-label">voice note</span>
+    </div>
+    <div class="vn-caption">LISTEN CAREFULLY SONAKSHI</div>
+    <!-- edit this line freely for your own context/message -->
+    <p class="vn-context">Kuch baatein type karke nahi, bolke kehni thi — isliye ye chhota sa voice note tumhare liye.</p>
+    <audio id="vnAudio" src="voicenote.mp3" preload="none"></audio>
+  </div>
+
   <footer>Made w a lot's of efforts, i hope aapko pasand aaya hoga</footer>
 </div>
 
@@ -831,6 +949,25 @@ more doubts. Just us, doing it right this time..</p>
     p.style.fontSize = (14+Math.random()*10)+'px';
     document.body.appendChild(p);
   }
+
+  const vnAudio = document.getElementById('vnAudio');
+  const vnPlayBtn = document.getElementById('vnPlayBtn');
+  const vnBars = document.getElementById('vnBars');
+  function toggleVoice(){
+    if(vnAudio.paused){
+      vnAudio.play().catch(()=>{});
+      vnPlayBtn.textContent = '❚❚';
+      vnBars.classList.add('playing');
+    } else {
+      vnAudio.pause();
+      vnPlayBtn.textContent = '▶';
+      vnBars.classList.remove('playing');
+    }
+  }
+  vnAudio.addEventListener('ended', ()=>{
+    vnPlayBtn.textContent = '▶';
+    vnBars.classList.remove('playing');
+  });
 
   function openMail(){
     document.getElementById('homeScreen').classList.add('hidden');
