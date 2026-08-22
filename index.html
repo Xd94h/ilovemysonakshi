@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wifeyyy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#FBF3EC;
@@ -255,6 +255,153 @@
     font-size:13.5px;
     line-height:1.55;
     color:#6f5459;
+  }
+
+  /* ===================== "A MESSAGE FROM UR DAD" BOX ===================== */
+  .dad-box{
+    max-width:420px;
+    margin:0 auto;
+    background:#fffdfb;
+    border:1px solid #f0dfe4;
+    border-radius:18px;
+    padding:22px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    cursor:pointer;
+    box-shadow:0 14px 30px -18px rgba(122,46,56,0.3);
+    transition:transform .15s ease, box-shadow .15s ease;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:16px;
+    color:var(--wine-deep);
+  }
+  .dad-box:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -18px rgba(122,46,56,0.4); }
+  .dad-box:active{ transform:translateY(1px) scale(0.99); }
+  .dad-box .dad-icon{ font-size:21px; }
+
+  .modal-box.dad-card{
+    background:#fdf3ea;
+    border-radius:20px;
+    padding:34px 26px 28px;
+    max-width:520px;
+    width:100%;
+    max-height:88vh;
+    overflow-y:auto;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.55);
+  }
+  .dad-top-note{
+    font-family:'Caveat', cursive;
+    font-weight:600;
+    font-size:19px;
+    text-align:center;
+    color:#a44a4a;
+    margin-bottom:2px;
+  }
+  .dad-heading{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:clamp(1.5rem, 6vw, 2rem);
+    color:#7a1f1f;
+    text-align:center;
+    margin:2px 0 20px;
+    letter-spacing:0.01em;
+  }
+  .dad-card-inner{ text-align:center; margin-top:22px; }
+  .dad-photo-frame{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.12);
+    border-radius:8px;
+    padding:6px;
+    box-shadow:0 10px 24px -14px rgba(0,0,0,0.35);
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:220px;
+    min-width:220px;
+    max-width:100%;
+  }
+  .dad-photo-frame img{
+    display:none;
+    max-width:100%;
+    height:auto;
+    border-radius:4px;
+  }
+  .dad-caption{
+    margin-top:14px;
+    font-size:13px;
+    letter-spacing:0.05em;
+    color:#6f5459;
+    text-transform:uppercase;
+  }
+  .dad-chat{
+    margin-top:26px;
+    padding-top:22px;
+    border-top:1px dashed #e3cdb8;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    text-align:left;
+  }
+  .chat-msg{
+    max-width:84%;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  .chat-msg.papa{ align-self:flex-start; align-items:flex-start; }
+  .chat-msg.shivam{ align-self:flex-end; align-items:flex-end; }
+  .chat-sender{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#a9877c;
+    padding:0 4px;
+  }
+  .chat-bubble{
+    padding:10px 14px;
+    border-radius:16px;
+    font-size:14px;
+    line-height:1.55;
+    word-break:break-word;
+  }
+  .chat-msg.papa .chat-bubble{
+    background:#fff;
+    border:1px solid #eadfce;
+    border-top-left-radius:4px;
+    color:#4a3630;
+  }
+  .chat-msg.shivam .chat-bubble{
+    background:linear-gradient(135deg, var(--wine), var(--rose));
+    color:#fff9f6;
+    border-top-right-radius:4px;
+  }
+  .papa-final-msg{
+    margin-top:22px;
+    background:#fff6ea;
+    border:1.5px dashed #d8a24a;
+    border-radius:14px;
+    padding:18px 16px;
+    text-align:center;
+  }
+  .papa-final-msg .label{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:#b9822f;
+    margin-bottom:8px;
+  }
+  .papa-final-msg p{
+    font-size:14.5px;
+    line-height:1.7;
+    color:#4a3630;
+  }
+  .dad-card .modal-close{
+    top:12px; right:12px;
   }
 
   .voice-note{
@@ -887,6 +1034,13 @@ more doubts. Just us, doing it right this time..</p>
   </div>
 
   <div class="final-section" style="border-top:1px dashed #e6c9d1; padding-top:40px; margin-top:40px;">
+    <div class="dad-box" onclick="openDadMessage()">
+      <span class="dad-icon">💌</span>
+      <span>A message from ur dad</span>
+    </div>
+  </div>
+
+  <div class="final-section" style="border-top:1px dashed #e6c9d1; padding-top:40px; margin-top:40px;">
     <div class="voice-note">
       <button class="vn-play" id="vnPlayBtn" onclick="toggleVoice()">▶</button>
       <div class="vn-bars" id="vnBars">
@@ -904,6 +1058,91 @@ more doubts. Just us, doing it right this time..</p>
   </div>
 
   <footer>Made w a lot's of efforts, i hope aapko pasand aaya hoga</footer>
+</div>
+
+<div class="modal-overlay" id="dadModalOverlay">
+  <div class="modal-box dad-card">
+    <button class="modal-close" onclick="closeDadMessage()">✕</button>
+    <div class="dad-top-note">a little something from him too</div>
+    <!-- edit this heading freely -->
+    <h2 class="dad-heading">Papa's little surprise for you</h2>
+
+    <div class="dad-chat">
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">Awlee mera bachha kitna bada hogaya,, Beta dekho u don;t deserve ts loser isko chhod do u deserve much better</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">Yawr sasur ji 😭</span>
+      </div>
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">Hehehe , majak karra tha betaa ,, Dekho ik he hurted uh a lot itna ki u won;t heal ever and the best decision u can take is leave him ,, but he;s trying his best ,, Ek chance toh dena banta hai and tumhara future boht struggling hoga beta u need him so much ,, Ik tumko koi idea nahi hoga but believe me beta u need him the most</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">Uncle kya yaawr aap bhi jhoot jhoot bolre ho usko , Usko nahi rehna toh rehndete hai kyu force karna usko itna?</span>
+      </div>
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">Nalayak chup rahe mai baat karra hu na</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">Sorrry uncle 🥹</span>
+      </div>
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">Ek baar aur bola naa uncle bhul ja sonakshi ko , nahi duga uska haath tujhe 😡</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">Aree Sorry papa 😭😭</span>
+      </div>
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">Tu ullu ke pathhe promise kar usko hurt nahi karega and agar constantly fights huye toh mai teri band bajaduga</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">i'm sorry papa aapki beti ko itna hurt karne ke liyee ,, Genuinely sorry kuch bhi jaanbujhke nahi kiya papa , kasam se i lobe her the most bas hojati hai galtiya and atp itni galtiya kar chuka hu ki kuch thek bhi nahi hoga</span>
+      </div>
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">It's okay beta , Sab thek hojayega , The only reason i like you is ki tu uspe give up nahi karta , itna sab kuch hone ke baad bhi</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">Kya karuu papaa yee aapki beti hai hi itni pyaarii rasmalai jaisi ekdum man karta hai bas khaa jauuu</span>
+      </div>
+      <div class="chat-msg papa">
+        <span class="chat-sender">Papa</span>
+        <span class="chat-bubble">Oyee bas bas jyada hora hai abb</span>
+      </div>
+      <div class="chat-msg shivam">
+        <span class="chat-sender">Shivam</span>
+        <span class="chat-bubble">Sorry papa 😭😭😭</span>
+      </div>
+    </div>
+
+    <div class="papa-final-msg">
+      <div class="label">A MESSAGE FROM PAPA</div>
+      <p>Beta papa is so proud of youu , And i lobe uh the mostt Dhyaan rakhio apna and namrata ka and baaki sabka bhi and dw ik ur overwhelmed ts days and tere jagah koi aur hota toh woh bhi give up hi karta, kyuki no one can suffered from itna sab kuch, But tu meri strong beti hai samjhi?? mujhe firse tumhe godi mai bethana hai and sonakkhi bolna hai 🫂🧿</p>
+    </div>
+
+    <div class="dad-card-inner">
+      <div class="dad-photo-frame">
+        <img id="dadImage" src="dad-photo.jpg" alt="dad photo"
+             onload="this.style.display='block';"
+             onerror="this.style.display='none';">
+      </div>
+      <!-- edit this caption freely -->
+      <p class="dad-caption" id="dadCaption">add your caption here</p>
+    </div>
+
+    <audio id="dadAudio" src="dad-song.mp3" loop preload="none"></audio>
+  </div>
 </div>
 
 <div class="modal-overlay" id="imageModalOverlay">
@@ -949,6 +1188,23 @@ more doubts. Just us, doing it right this time..</p>
     p.style.fontSize = (14+Math.random()*10)+'px';
     document.body.appendChild(p);
   }
+
+  function openDadMessage(){
+    document.getElementById('dadModalOverlay').classList.add('show');
+    const song = document.getElementById('dadAudio');
+    song.currentTime = 0;
+    song.loop = true;
+    song.play().catch(()=>{});
+  }
+  function closeDadMessage(){
+    document.getElementById('dadModalOverlay').classList.remove('show');
+    const song = document.getElementById('dadAudio');
+    song.pause();
+    song.currentTime = 0;
+  }
+  document.getElementById('dadModalOverlay').addEventListener('click', (e)=>{
+    if(e.target.id==='dadModalOverlay') closeDadMessage();
+  });
 
   const vnAudio = document.getElementById('vnAudio');
   const vnPlayBtn = document.getElementById('vnPlayBtn');
