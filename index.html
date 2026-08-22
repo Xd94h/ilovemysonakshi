@@ -434,7 +434,9 @@
 
   .modal-overlay{
     position:fixed; inset:0;
-    background:rgba(46,31,39,0.72);
+    background:rgba(46,31,39,0.55);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
     display:none;
     align-items:center;
     justify-content:center;
@@ -544,6 +546,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
+    max-width:600px;
   }
   .carousel{
     display:flex;
@@ -571,7 +574,7 @@
   .img-wrap{
     position:relative;
     display:block;
-    width:min(64vw, 280px);
+    width:min(85vw, 430px);
     aspect-ratio:4/5;
     padding:16px;
     border-radius:22px;
@@ -629,7 +632,7 @@
     padding:0 10px;
   }
   @media(max-width:420px){
-    .img-wrap{ width:min(58vw, 240px); }
+    .img-wrap{ width:min(72vw, 300px); }
     .arrow-btn{ width:32px; height:32px; font-size:16px; }
   }
 </style>
