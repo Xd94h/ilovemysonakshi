@@ -281,6 +281,47 @@
   .dad-box:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -18px rgba(122,46,56,0.4); }
   .dad-box:active{ transform:translateY(1px) scale(0.99); }
   .dad-box .dad-icon{ font-size:21px; }
+  .memories-box{
+    max-width:420px;
+    margin:0 auto;
+    background:#fffdfb;
+    border:1px solid #f0dfe4;
+    border-radius:18px;
+    padding:22px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    cursor:pointer;
+    box-shadow:0 14px 30px -18px rgba(122,46,56,0.3);
+    transition:transform .15s ease, box-shadow .15s ease;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:16px;
+    color:var(--wine-deep);
+  }
+  .memories-box:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -18px rgba(122,46,56,0.4); }
+  .memories-box:active{ transform:translateY(1px) scale(0.99); }
+  .modal-box.memories-card{
+    background:transparent;
+    box-shadow:none;
+    overflow:visible;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    max-width:900px;
+    width:100%;
+  }
+  .memories-card h3{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:1.3rem;
+    color:#fbe4ec;
+    text-align:center;
+    margin-bottom:18px;
+  }
 
   .modal-box.dad-card{
     background:#fdf3ea;
@@ -761,103 +802,52 @@
   }
   .modal-box video{ width:100%; display:block; max-height:80vh; }
 
-  /* video reveal card — pink gradient frame around the video */
+  /* video reveal card — pink gradient frame around the youtube embed */
   .modal-box.video-card{
     background:linear-gradient(160deg, #ffe3ee, #fbc9dd);
     padding:16px;
     border-radius:20px;
-    overflow:visible;
+    overflow-y:auto;
+    max-height:90vh;
     box-shadow:
       0 25px 60px -20px rgba(122,46,56,0.55),
       0 0 0 3px #fff inset;
   }
-  .modal-box.video-card video{
+  .yt-video-wrap{
+    position:relative;
+    width:100%;
+    padding-bottom:177.7%; /* portrait 9:16 — matches reels/shorts framing */
+    height:0;
     border-radius:12px;
-    background:#000;
-    transition:opacity .5s ease;
-  }
-
-  /* ===== FULLSCREEN PORTRAIT ZOOM MODE for the surprise video ===== */
-  .modal-overlay.video-fullscreen{
-    padding:0;
-    background:#000;
-    backdrop-filter:none;
-    -webkit-backdrop-filter:none;
-  }
-  .modal-overlay.video-fullscreen .modal-box.video-card{
-    background:#000;
-    padding:0;
-    border-radius:0;
-    box-shadow:none;
-    width:100%;
-    height:100%;
-    max-width:100%;
-    max-height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     overflow:hidden;
-  }
-  .modal-overlay.video-fullscreen .modal-box.video-card video{
-    width:100%;
-    height:100%;
-    max-height:100%;
-    border-radius:0;
-    object-fit:cover;
-    object-position:center;
-  }
-  .modal-overlay.video-fullscreen .video-thanks.show{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
     background:#000;
-    padding:24px;
+    box-shadow:0 10px 26px -12px rgba(90,31,39,0.4);
   }
-  .modal-overlay.video-fullscreen .video-thanks h3,
-  .modal-overlay.video-fullscreen .video-thanks p{
-    color:#fbe4ec;
+  .yt-video-wrap iframe{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    border:0;
   }
-  .modal-overlay.video-fullscreen .modal-close{
-    top:calc(env(safe-area-inset-top, 0px) + 14px);
-    right:calc(env(safe-area-inset-right, 0px) + 14px);
-    width:36px;
-    height:36px;
-    font-size:18px;
-    background:rgba(0,0,0,0.5);
-    color:#fff;
-    z-index:5;
+  .video-context-box{
+    margin-top:16px;
+    background:#fffdfb;
+    border:1px solid #f0dfe4;
+    border-radius:16px;
+    padding:18px 20px;
+    box-shadow:0 14px 30px -18px rgba(122,46,56,0.3);
   }
-  .video-thanks{
-    display:none;
-    text-align:center;
-    padding:46px 18px;
+  .video-context-box p{
+    font-size:14.5px;
+    line-height:1.75;
+    color:#4a3630;
+    white-space:pre-line;
+    text-align:left;
   }
-  .video-thanks.show{
-    display:block;
-    animation:fadeUp 0.7s ease;
-  }
-  .video-thanks .heart-pop{
-    font-size:34px;
-    margin-bottom:12px;
-    display:block;
-  }
-  .video-thanks h3{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:600;
-    font-size:1.35rem;
-    color:var(--wine-deep);
-    margin-bottom:10px;
-  }
-  .video-thanks p{
-    font-size:14px;
-    line-height:1.65;
-    color:#6f5459;
-    max-width:340px;
-    margin:0 auto;
+  .modal-vn-wrap{
+    margin-top:22px;
+    padding-top:20px;
+    border-top:1px dashed #e6c9d1;
   }
   .modal-close{
     position:absolute;
@@ -952,7 +942,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    max-width:600px;
+    max-width:900px;
   }
   .carousel{
     display:flex;
@@ -962,12 +952,12 @@
   }
   .arrow-btn{
     flex-shrink:0;
-    width:38px;
-    height:38px;
+    width:42px;
+    height:42px;
     border-radius:50%;
     background:#fff;
     color:var(--wine-deep);
-    font-size:19px;
+    font-size:20px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -977,49 +967,34 @@
   .arrow-btn:hover{ background:var(--rose-light); transform:scale(1.06); }
   .arrow-btn:active{ transform:scale(0.94); }
 
+  /* wrapper hugs the image's own natural size — no forced aspect ratio, no cropping */
   .img-wrap{
     position:relative;
-    display:block;
-    width:min(85vw, 430px);
-    aspect-ratio:4/5;
-    padding:16px;
-    border-radius:22px;
-    background:linear-gradient(160deg, #ffe3ee, #fbc9dd);
-    box-shadow:
-      0 25px 60px -20px rgba(122,46,56,0.55),
-      0 0 0 3px #fff inset;
-  }
-  .img-wrap::before{
-    content:"";
-    position:absolute;
-    inset:9px;
-    border:2px dashed #ee9dc0;
-    border-radius:15px;
-    pointer-events:none;
-    z-index:1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:260px;
+    min-height:320px;
   }
   /* blank placeholder space until an image is added — frame stays, no broken icon/text */
+  /* image shows at its full natural size (up to viewport caps), never cropped */
+  /* clean brown stroke + heavy black drop shadow, no decorative frame */
   .glow-frame{
     position:relative;
     display:none;
-    width:100%;
-    height:100%;
-    object-fit:cover;
+    width:auto;
+    height:auto;
+    max-width:min(92vw, 780px);
+    max-height:86vh;
+    object-fit:contain;
     border-radius:10px;
-    border:3px solid #fff;
-    box-shadow:0 8px 22px rgba(90,31,39,0.35);
+    border:5px solid #6b4226;
+    box-shadow:
+      0 25px 50px rgba(0,0,0,0.55),
+      0 10px 22px rgba(0,0,0,0.4);
   }
-  .corner-svg{
-    position:absolute;
-    width:32px;
-    height:32px;
-    z-index:2;
-    filter:drop-shadow(0 1px 1px rgba(122,46,56,0.25));
-  }
-  .corner-svg.tl{ top:-2px; left:-2px; transform:rotate(0deg); }
-  .corner-svg.tr{ top:-2px; right:-2px; transform:rotate(90deg); }
-  .corner-svg.br{ bottom:-2px; right:-2px; transform:rotate(180deg); }
-  .corner-svg.bl{ bottom:-2px; left:-2px; transform:rotate(270deg); }
+
+  .corner-svg{ display:none; }
 
   .image-box .modal-close{
     top:-14px; right:-14px;
@@ -1038,11 +1013,13 @@
     padding:0 10px;
   }
   @media(max-width:420px){
-    .img-wrap{ width:min(72vw, 300px); }
-    .arrow-btn{ width:32px; height:32px; font-size:16px; }
+    .img-wrap{ min-width:200px; min-height:240px; }
+    .glow-frame{ max-width:88vw; max-height:76vh; border-width:4px; }
+    .arrow-btn{ width:34px; height:34px; font-size:17px; }
   }
 </style>
 </head>
+
 
 <body>
 
@@ -1199,20 +1176,10 @@ more doubts. Just us, doing it right this time..</p>
   </div>
 
   <div class="final-section" style="border-top:1px dashed #e6c9d1; padding-top:40px; margin-top:40px;">
-    <div class="voice-note">
-      <button class="vn-play" id="vnPlayBtn" onclick="toggleVoice()">▶</button>
-      <div class="vn-bars" id="vnBars">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-      <span class="vn-label">voice note</span>
+    <div class="memories-box" onclick="openMemories()">
+      <span class="dad-icon">📸</span>
+      <span>Memories</span>
     </div>
-    <div class="vn-caption">LISTEN CAREFULLY MADAM JII</div>
-    <!-- edit this line freely for your own context/message -->
-    <p class="vn-context"></p>
-    <audio id="vnAudio" src="voicenote.mp3" preload="none"></audio>
   </div>
 
   <button id="btsBtn" onclick="openBTS()">Behind The Scene</button>
@@ -1305,6 +1272,26 @@ more doubts. Just us, doing it right this time..</p>
   </div>
 </div>
 
+<div class="modal-overlay" id="memoriesModalOverlay">
+  <div class="modal-box memories-card">
+    <button class="modal-close" onclick="closeMemories()">✕</button>
+    <h3>Some more memories 📸</h3>
+    <div class="carousel">
+      <button class="arrow-btn" onclick="prevMemory()">‹</button>
+      <div class="img-wrap">
+        <svg class="corner-svg tl" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M3,37 C3,18 18,3 37,3" stroke="#e85d8a" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="37" cy="3" r="3" fill="#e85d8a"/><circle cx="3" cy="37" r="2" fill="#e85d8a"/></svg>
+        <svg class="corner-svg tr" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M3,37 C3,18 18,3 37,3" stroke="#e85d8a" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="37" cy="3" r="3" fill="#e85d8a"/><circle cx="3" cy="37" r="2" fill="#e85d8a"/></svg>
+        <svg class="corner-svg br" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M3,37 C3,18 18,3 37,3" stroke="#e85d8a" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="37" cy="3" r="3" fill="#e85d8a"/><circle cx="3" cy="37" r="2" fill="#e85d8a"/></svg>
+        <svg class="corner-svg bl" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M3,37 C3,18 18,3 37,3" stroke="#e85d8a" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="37" cy="3" r="3" fill="#e85d8a"/><circle cx="3" cy="37" r="2" fill="#e85d8a"/></svg>
+        <img id="theMemoryImage" class="glow-frame" src="" alt="memory"
+             onload="this.style.display='block';"
+             onerror="this.style.display='none';">
+      </div>
+      <button class="arrow-btn" onclick="nextMemory()">›</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="imageModalOverlay">
   <div class="modal-box image-box">
     <button class="modal-close" onclick="closeImage()">✕</button>
@@ -1328,32 +1315,66 @@ more doubts. Just us, doing it right this time..</p>
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-box video-card">
     <button class="modal-close" onclick="closeVideo()">✕</button>
-    <video id="theVideo" controls playsinline>
-      <source src="surprise.mp4" type="video/mp4">
-      Your browser doesn't support video playback.
-    </video>
-    <div class="fallback-note" id="fallbackNote">Video load nahi ho payi — check karo "surprise.mp4" file index.html ke saath hi folder me hai.</div>
-    <!-- edit this thank-you message freely -->
-    <div class="video-thanks" id="videoThanks">
-      <span class="heart-pop">🤍</span>
-      <h3>I lobee youuu <3 </h3>
-      <p>Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭
 
-Like idk inlog mere se itna pyaar kyu karte hai saaale sab ek number ke cutu hai 
+    <div class="yt-video-wrap">
+      <!-- paste your YouTube video ID in place of PASTE YOUTUBE ID below -->
+      <iframe id="mainYtFrame" src="https://www.youtube.com/embed/PASTE YOUTUBE ID?rel=0&playsinline=1" title="surprise video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
 
-i don't deserve itna pyaar ali toh bolra tha tere liye mai bhabhi ke pairo mai gir ke mafi manglu tere liye,,
+    <div class="video-context-box">
+      <!-- edit this context freely -->
+      <p>PASTE CONTEXT 1</p>
+    </div>
 
-mishra bolra tha i lobe uh bhai ur doing all ts stuff and woh bolra tha 9 month ka anniversary kon manata hai fir I said bhai ham manate hai 😭😭
+    <div class="modal-vn-wrap">
+      <div class="voice-note">
+        <button class="vn-play" id="vnPlayBtn" onclick="toggleVoice('vnAudio','vnPlayBtn','vnBars')">▶</button>
+        <div class="vn-bars" id="vnBars">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="vn-label">voice note</span>
+      </div>
+      <div class="vn-caption">LISTEN CAREFULLY MADAM JII</div>
+      <!-- edit this line freely for your own context/message -->
+      <p class="vn-context">PASTE CONTEXT 2</p>
+      <audio id="vnAudio" src="voicenote.mp3" preload="none"></audio>
+    </div>
 
-i've putted so much efforts inlog se begging karni padi ki bhai bhejdo please video banake 😭
+    <div class="modal-vn-wrap">
+      <div class="voice-note">
+        <button class="vn-play" id="vnPlayBtn2" onclick="toggleVoice('vnAudio2','vnPlayBtn2','vnBars2')">▶</button>
+        <div class="vn-bars" id="vnBars2">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="vn-label">voice note</span>
+      </div>
+      <div class="vn-caption">LISTEN CAREFULLY MADAM JII</div>
+      <!-- edit this line freely for your own context/message -->
+      <p class="vn-context">PASTE CONTEXT 3</p>
+      <audio id="vnAudio2" src="voicenote2.mp3" preload="none"></audio>
+    </div>
 
-fir we did it sabne videos banaye sabne boht efforts diye i appreciate all of them ❤️ 
-
-I js want ki jab ur reading ts ur blushing so muchh 
-
-I lobe uh so much Mera bachhaa ,, 🤍💌
-      
-      </p>
+    <div class="modal-vn-wrap">
+      <div class="voice-note">
+        <button class="vn-play" id="vnPlayBtn3" onclick="toggleVoice('vnAudio3','vnPlayBtn3','vnBars3')">▶</button>
+        <div class="vn-bars" id="vnBars3">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="vn-label">voice note</span>
+      </div>
+      <div class="vn-caption">LISTEN CAREFULLY MADAM JII</div>
+      <!-- edit this line freely for your own context/message -->
+      <p class="vn-context">PASTE CONTEXT 4</p>
+      <audio id="vnAudio3" src="voicenote3.mp3" preload="none"></audio>
     </div>
   </div>
 </div>
@@ -1429,23 +1450,41 @@ I lobe uh so much Mera bachhaa ,, 🤍💌
     if(e.target.id==='dadModalOverlay') closeDadMessage();
   });
 
-  const vnAudio = document.getElementById('vnAudio');
-  const vnPlayBtn = document.getElementById('vnPlayBtn');
-  const vnBars = document.getElementById('vnBars');
-  function toggleVoice(){
-    if(vnAudio.paused){
-      vnAudio.play().catch(()=>{});
-      vnPlayBtn.textContent = '❚❚';
-      vnBars.classList.add('playing');
+  function toggleVoice(audioId, btnId, barsId){
+    const audio = document.getElementById(audioId);
+    const btn = document.getElementById(btnId);
+    const bars = document.getElementById(barsId);
+    if(audio.paused){
+      // pause the other voice note if it's playing
+      ['vnAudio','vnAudio2'].forEach(id=>{
+        if(id !== audioId){
+          const other = document.getElementById(id);
+          if(other && !other.paused){
+            other.pause();
+            const otherNum = id.replace('vnAudio','');
+            const otherBtn = document.getElementById('vnPlayBtn'+otherNum);
+            const otherBars = document.getElementById('vnBars'+otherNum);
+            if(otherBtn) otherBtn.textContent = '▶';
+            if(otherBars) otherBars.classList.remove('playing');
+          }
+        }
+      });
+      audio.play().catch(()=>{});
+      btn.textContent = '❚❚';
+      bars.classList.add('playing');
     } else {
-      vnAudio.pause();
-      vnPlayBtn.textContent = '▶';
-      vnBars.classList.remove('playing');
+      audio.pause();
+      btn.textContent = '▶';
+      bars.classList.remove('playing');
     }
   }
-  vnAudio.addEventListener('ended', ()=>{
-    vnPlayBtn.textContent = '▶';
-    vnBars.classList.remove('playing');
+  ['vnAudio','vnAudio2'].forEach(id=>{
+    const audio = document.getElementById(id);
+    const num = id.replace('vnAudio','');
+    audio.addEventListener('ended', ()=>{
+      document.getElementById('vnPlayBtn'+num).textContent = '▶';
+      document.getElementById('vnBars'+num).classList.remove('playing');
+    });
   });
 
   function openMail(){
@@ -1517,46 +1556,50 @@ I lobe uh so much Mera bachhaa ,, 🤍💌
   function openVideo(){
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.add('show');
-    overlay.classList.add('video-fullscreen');
-    const vid = document.getElementById('theVideo');
-    const thanks = document.getElementById('videoThanks');
-    thanks.classList.remove('show');
-    vid.style.display = 'block';
-    vid.style.opacity = '1';
-    vid.currentTime = 0;
-
-    // ask the browser to fetch the best quality it can for this connection
-    vid.setAttribute('preload', 'auto');
-
-    // NOTE: we deliberately do NOT use the native browser Fullscreen API here.
-    // Native fullscreen takes over the whole screen with the browser's own UI,
-    // which hides/shifts our custom cross (close) button. Instead the
-    // ".video-fullscreen" CSS class (added above) already makes the video
-    // cover the entire screen, zoomed and portrait — while keeping our own
-    // close button fully visible and correctly placed in the corner.
-    const playPromise = vid.play();
-    if(playPromise){ playPromise.catch(()=>{}); }
-    vid.onerror = ()=>{ document.getElementById('fallbackNote').style.display='block'; };
-  }
-  vidEndedSetup();
-  function vidEndedSetup(){
-    const vid = document.getElementById('theVideo');
-    vid.addEventListener('ended', ()=>{
-      vid.style.opacity = '0';
-      setTimeout(()=>{
-        vid.style.display = 'none';
-        document.getElementById('videoThanks').classList.add('show');
-      }, 500);
-    });
+    const frame = document.getElementById('mainYtFrame');
+    const baseSrc = frame.getAttribute('src').split('?')[0];
+    frame.src = baseSrc + '?autoplay=1&rel=0&playsinline=1';
   }
   function closeVideo(){
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.remove('show');
-    overlay.classList.remove('video-fullscreen');
-    document.getElementById('theVideo').pause();
+    const frame = document.getElementById('mainYtFrame');
+    const baseSrc = frame.getAttribute('src').split('?')[0];
+    frame.src = baseSrc; // reload without autoplay to stop playback
+    ['vnAudio','vnAudio2'].forEach(id=>{
+      const audio = document.getElementById(id);
+      if(audio && !audio.paused){
+        audio.pause();
+        const num = id.replace('vnAudio','');
+        document.getElementById('vnPlayBtn'+num).textContent = '▶';
+        document.getElementById('vnBars'+num).classList.remove('playing');
+      }
+    });
   }
   document.getElementById('modalOverlay').addEventListener('click', (e)=>{
     if(e.target.id==='modalOverlay') closeVideo();
+  });
+
+  const memoryImages = ['memory-1.jpg','memory-2.jpg','memory-3.jpg','memory-4.jpg','memory-5.jpg','memory-6.jpg','memory-7.jpg','memory-8.jpg'];
+  let memoryIndex = 0;
+  function loadMemoryImage(i){
+    memoryIndex = (i + memoryImages.length) % memoryImages.length;
+    const img = document.getElementById('theMemoryImage');
+    img.style.display = 'none';
+    img.src = memoryImages[memoryIndex];
+  }
+  function prevMemory(){ loadMemoryImage(memoryIndex - 1); }
+  function nextMemory(){ loadMemoryImage(memoryIndex + 1); }
+
+  function openMemories(){
+    loadMemoryImage(0);
+    document.getElementById('memoriesModalOverlay').classList.add('show');
+  }
+  function closeMemories(){
+    document.getElementById('memoriesModalOverlay').classList.remove('show');
+  }
+  document.getElementById('memoriesModalOverlay').addEventListener('click', (e)=>{
+    if(e.target.id==='memoriesModalOverlay') closeMemories();
   });
 
   const galleryImages = [
