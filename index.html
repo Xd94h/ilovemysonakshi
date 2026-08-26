@@ -1327,8 +1327,8 @@ more doubts. Just us, doing it right this time..</p>
     <button class="modal-close" onclick="closeVideo()">✕</button>
 
     <div class="yt-video-wrap">
-      <!-- paste your YouTube video ID in place of PASTE YOUTUBE ID below -->
-      <iframe id="mainYtFrame" src="https://www.youtube.com/embed/PASTE YOUTUBE ID?rel=0&playsinline=1" title="surprise video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <!-- paste your Jumpshare embed link in place of PASTE VIDEO LINK HERE below -->
+      <iframe id="mainVideoFrame" src="PASTE VIDEO LINK HERE" title="surprise video" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
 
     <div class="video-context-box">
@@ -1405,8 +1405,7 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
   <div class="modal-box bts-card">
     <button class="modal-close" onclick="closeBTS()">✕</button>
     <div class="bts-video-wrap">
-      <!-- paste your YouTube video ID in place of PASTE YT ID below -->
-      <iframe src="https://www.youtube.com/embed/ZnY1Q_jcVRQ?si=SyM6eonpKnVCuF9d" title="Behind the scene" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe id="btsFrame" src="https://jumpshare.com/embed/b8IKGRkO7FdoNfBkbe45" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
     <!-- edit this caption freely -->
     <p class="bts-caption">I LOBE UH DA MOST YAWLL..</p>
@@ -1562,16 +1561,12 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
   function openVideo(){
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.add('show');
-    const frame = document.getElementById('mainYtFrame');
-    const baseSrc = frame.getAttribute('src').split('?')[0];
-    frame.src = baseSrc + '?autoplay=1&rel=0&playsinline=1';
   }
   function closeVideo(){
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.remove('show');
-    const frame = document.getElementById('mainYtFrame');
-    const baseSrc = frame.getAttribute('src').split('?')[0];
-    frame.src = baseSrc; // reload without autoplay to stop playback
+    const frame = document.getElementById('mainVideoFrame');
+    frame.src = frame.src; // reload to stop playback
     ['vnAudio','vnAudio2'].forEach(id=>{
       const audio = document.getElementById(id);
       if(audio && !audio.paused){
