@@ -502,6 +502,9 @@
   .bts-video-wrap iframe.ready{
     opacity:1;
   }
+  .bts-video-wrap #btsFrame2{
+    z-index:1;
+  }
   .bts-loader{
     position:absolute;
     inset:0;
@@ -1465,12 +1468,11 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
         <div class="bts-bar-track"><div class="bts-bar-fill" id="btsBarFill"></div></div>
         <div class="bts-loader-label">getting it ready...</div>
       </div>
-      <iframe id="btsFrame" src="" data-jumpshare-src="https://jumpshare.com/embed/juB5r6CseHrSxGLPAkwn" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <iframe id="btsFrame" src="" data-jumpshare-src="https://jumpshare.com/embed/b8IKGRkO7FdoNfBkbe45" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <iframe id="btsFrame2" src="" data-yt-id="fdmbhiq1wzI" title="Behind the scene part 2" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
     <!-- edit this caption freely -->
-    <p class="bts-caption" id="btsCaption">I LOBE UH DA MOST YAWLL..
-    
-    IF IT'S SHOWING BLANK CUT AND REOPEN</p>
+    <p class="bts-caption" id="btsCaption">I LOBE UH DA MOST YAWLL..</p>
   </div>
 </div>
 
@@ -1488,16 +1490,27 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
   }
 
   let btsLoadTimer = null;
+  let btsSwitchTimer = null;
+
+  // how long the jumpshare clip plays before it auto-swaps to the youtube video (in ms)
+  // edit this number if the jumpshare clip's length changes
+  const BTS_CLIP1_DURATION_MS = 22000;
+
   function openBTS(){
     document.getElementById('btsModalOverlay').classList.add('show');
 
     const frame = document.getElementById('btsFrame');
+    const frame2 = document.getElementById('btsFrame2');
     const loader = document.getElementById('btsLoader');
     const pctEl = document.getElementById('btsPct');
     const fillEl = document.getElementById('btsBarFill');
 
     // reset state
     frame.classList.remove('ready');
+    frame.style.display = 'block';
+    frame2.classList.remove('ready');
+    frame2.style.display = 'none';
+    frame2.src = '';
     loader.classList.remove('hide');
     pctEl.textContent = '0%';
     fillEl.style.width = '0%';
@@ -1523,17 +1536,45 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
         clearInterval(btsLoadTimer);
         frame.classList.add('ready');
         setTimeout(()=> loader.classList.add('hide'), 300);
+
+        // once clip 1 is visible/playing, queue the swap to the youtube video
+        clearTimeout(btsSwitchTimer);
+        btsSwitchTimer = setTimeout(switchBTSToYoutube, BTS_CLIP1_DURATION_MS);
       }
     }, stepMs);
+  }
+
+  function switchBTSToYoutube(){
+    const frame = document.getElementById('btsFrame');
+    const frame2 = document.getElementById('btsFrame2');
+    const ytId = frame2.getAttribute('data-yt-id');
+
+    // load + fade in the youtube video first
+    frame2.style.display = 'block';
+    frame2.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0&playsinline=1';
+    requestAnimationFrame(()=> frame2.classList.add('ready'));
+
+    // then fade out & remove the jumpshare video
+    frame.classList.remove('ready');
+    setTimeout(()=>{
+      frame.src = '';
+      frame.style.display = 'none';
+    }, 500);
   }
 
   function closeBTS(){
     document.getElementById('btsModalOverlay').classList.remove('show');
     clearInterval(btsLoadTimer);
+    clearTimeout(btsSwitchTimer);
     const frame = document.getElementById('btsFrame');
+    const frame2 = document.getElementById('btsFrame2');
     const loader = document.getElementById('btsLoader');
     frame.src = ''; // stop playback
     frame.classList.remove('ready');
+    frame.style.display = 'block';
+    frame2.src = '';
+    frame2.classList.remove('ready');
+    frame2.style.display = 'none';
     loader.classList.remove('hide');
   }
   document.getElementById('btsModalOverlay').addEventListener('click', (e)=>{
