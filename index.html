@@ -496,6 +496,53 @@
     top:0; left:0;
     width:100%; height:100%;
     border:0;
+    opacity:0;
+    transition:opacity .5s ease;
+  }
+  .bts-video-wrap iframe.ready{
+    opacity:1;
+  }
+  .bts-loader{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    background:#1a1014;
+    z-index:2;
+    transition:opacity .4s ease, visibility .4s ease;
+  }
+  .bts-loader.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .bts-loader .bts-pct{
+    font-family:'Fraunces', serif;
+    font-size:26px;
+    font-weight:600;
+    color:#f6e0e7;
+  }
+  .bts-loader .bts-bar-track{
+    width:70%;
+    height:6px;
+    border-radius:99px;
+    background:rgba(246,224,231,0.2);
+    overflow:hidden;
+  }
+  .bts-loader .bts-bar-fill{
+    height:100%;
+    width:0%;
+    border-radius:99px;
+    background:linear-gradient(90deg, var(--rose), var(--gold));
+  }
+  .bts-loader .bts-loader-label{
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#d9b8c2;
   }
   .bts-caption{
     margin-top:16px;
@@ -1413,7 +1460,12 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
   <div class="modal-box bts-card">
     <button class="modal-close" onclick="closeBTS()">✕</button>
     <div class="bts-video-wrap" id="btsVideoWrap">
-      <iframe id="btsFrame" src="" data-drive-link="PASTE LINK HERE 1" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="bts-loader" id="btsLoader">
+        <div class="bts-pct" id="btsPct">0%</div>
+        <div class="bts-bar-track"><div class="bts-bar-fill" id="btsBarFill"></div></div>
+        <div class="bts-loader-label">getting it ready...</div>
+      </div>
+      <iframe id="btsFrame" src="" data-jumpshare-src="https://jumpshare.com/embed/b8IKGRkO7FdoNfBkbe45" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
     <!-- edit this caption freely -->
     <p class="bts-caption" id="btsCaption">I LOBE UH DA MOST YAWLL..</p>
@@ -1433,21 +1485,53 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
     document.body.appendChild(p);
   }
 
+  let btsLoadTimer = null;
   function openBTS(){
     document.getElementById('btsModalOverlay').classList.add('show');
 
     const frame = document.getElementById('btsFrame');
-    const rawLink = frame.getAttribute('data-drive-link');
-    const id = driveIdFromLink(rawLink);
-    if(id){
-      frame.src = 'https://drive.google.com/file/d/' + id + '/preview';
+    const loader = document.getElementById('btsLoader');
+    const pctEl = document.getElementById('btsPct');
+    const fillEl = document.getElementById('btsBarFill');
+
+    // reset state
+    frame.classList.remove('ready');
+    loader.classList.remove('hide');
+    pctEl.textContent = '0%';
+    fillEl.style.width = '0%';
+
+    // start loading the video in the background right away
+    if(!frame.src){
+      frame.src = frame.getAttribute('data-jumpshare-src');
     }
+
+    // fake progress bar that takes ~20s, giving the video time to buffer
+    const durationMs = 20000;
+    const stepMs = 100;
+    const steps = durationMs / stepMs;
+    let step = 0;
+    clearInterval(btsLoadTimer);
+    btsLoadTimer = setInterval(()=>{
+      step++;
+      const pct = Math.min(100, Math.round((step/steps)*100));
+      pctEl.textContent = pct + '%';
+      fillEl.style.width = pct + '%';
+      if(pct >= 100){
+        clearInterval(btsLoadTimer);
+        frame.classList.add('ready');
+        setTimeout(()=> loader.classList.add('hide'), 300);
+      }
+    }, stepMs);
   }
 
   function closeBTS(){
     document.getElementById('btsModalOverlay').classList.remove('show');
+    clearInterval(btsLoadTimer);
     const frame = document.getElementById('btsFrame');
+    const loader = document.getElementById('btsLoader');
     frame.src = ''; // stop playback
+    frame.classList.remove('ready');
+    loader.classList.remove('hide');
   }
   document.getElementById('btsModalOverlay').addEventListener('click', (e)=>{
     if(e.target.id==='btsModalOverlay') closeBTS();
