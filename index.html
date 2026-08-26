@@ -469,23 +469,28 @@
     padding:22px;
     max-width:560px;
     width:100%;
-    max-height:90vh;
-    overflow-y:auto;
     box-shadow:0 30px 70px -20px rgba(0,0,0,0.55);
   }
   .bts-video-wrap{
     position:relative;
-    width:auto;
+    width:100%;
     max-width:340px;
-    height:auto;
-    max-height:72vh;
-    aspect-ratio:9/16;
     margin:0 auto;
+    /* set this to the video's real ratio, e.g. 3/4, 4/5, 9/16 */
+    aspect-ratio: 9 / 16;
     border-radius:12px;
     overflow:hidden;
     box-shadow:0 10px 26px -12px rgba(90,31,39,0.4);
     background:#000;
   }
+  .bts-video-wrap video{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    cursor:pointer;
+  }
+  .bts-video-wrap video::-webkit-media-controls{ display:none !important; }
   .bts-video-wrap iframe{
     position:absolute;
     top:0; left:0;
@@ -500,62 +505,12 @@
     font-size:16px;
     color:var(--wine-deep);
   }
+
   .bts-card .modal-close{
     top:12px; right:12px;
     background:#fff;
     color:#e02424;
     border:1.5px solid #e02424;
-  }
-
-  .bts-loading{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:46px 12px;
-    gap:18px;
-  }
-  .bts-loading-ring{
-    position:relative;
-    width:120px;
-    height:120px;
-  }
-  .bts-loading-ring svg{
-    width:100%;
-    height:100%;
-    transform:rotate(-90deg);
-  }
-  .bts-loading-ring .ring-track{
-    fill:none;
-    stroke:#f0dfe4;
-    stroke-width:7;
-  }
-  .bts-loading-ring .ring-fill{
-    fill:none;
-    stroke:var(--wine);
-    stroke-width:7;
-    stroke-linecap:round;
-    stroke-dasharray:276.4601;
-    stroke-dashoffset:276.4601;
-    transition:stroke-dashoffset 0.15s linear;
-  }
-  .bts-loading-pct{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:22px;
-    color:var(--wine-deep);
-  }
-  .bts-loading-label{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:14.5px;
-    color:#8a6a70;
-    text-align:center;
   }
 
   .voice-note{
@@ -1381,8 +1336,7 @@ more doubts. Just us, doing it right this time..</p>
     <button class="modal-close" onclick="closeVideo()">✕</button>
 
     <div class="yt-video-wrap">
-      <!-- paste your Jumpshare embed link in place of PASTE VIDEO LINK HERE below -->
-      <iframe id="mainVideoFrame" src="PASTE VIDEO LINK HERE" title="surprise video" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <iframe id="mainVideoFrame" src="" data-yt-id="nffn4HaLgTM" title="surprise video" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
 
     <div class="video-context-box">
@@ -1458,23 +1412,11 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
 <div class="modal-overlay" id="btsModalOverlay">
   <div class="modal-box bts-card">
     <button class="modal-close" onclick="closeBTS()">✕</button>
-
-    <div class="bts-loading" id="btsLoading">
-      <div class="bts-loading-ring">
-        <svg viewBox="0 0 100 100">
-          <circle class="ring-track" cx="50" cy="50" r="44"></circle>
-          <circle class="ring-fill" id="btsRingFill" cx="50" cy="50" r="44"></circle>
-        </svg>
-        <span class="bts-loading-pct" id="btsLoadingPct">0%</span>
-      </div>
-      <p class="bts-loading-label" id="btsLoadingLabel">loading the moment...</p>
-    </div>
-
-    <div class="bts-video-wrap" id="btsVideoWrap" style="display:none;">
-      <iframe id="btsFrame" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="bts-video-wrap" id="btsVideoWrap">
+      <iframe id="btsFrame" src="" data-drive-link="PASTE LINK HERE 1" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
     <!-- edit this caption freely -->
-    <p class="bts-caption" id="btsCaption" style="display:none;">I LOBE UH DA MOST YAWLL..</p>
+    <p class="bts-caption" id="btsCaption">I LOBE UH DA MOST YAWLL..</p>
   </div>
 </div>
 
@@ -1491,54 +1433,21 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
     document.body.appendChild(p);
   }
 
-  const BTS_SRC = 'https://jumpshare.com/embed/b8IKGRkO7FdoNfBkbe45';
-  const BTS_DURATION = 14000; // ms, loading screen duration
-  let btsTimer = null;
-
   function openBTS(){
     document.getElementById('btsModalOverlay').classList.add('show');
 
-    const loading = document.getElementById('btsLoading');
-    const videoWrap = document.getElementById('btsVideoWrap');
-    const caption = document.getElementById('btsCaption');
-    const pctText = document.getElementById('btsLoadingPct');
-    const ringFill = document.getElementById('btsRingFill');
     const frame = document.getElementById('btsFrame');
-    const CIRC = 276.4601;
-
-    // reset to loading state
-    loading.style.display = 'flex';
-    videoWrap.style.display = 'none';
-    caption.style.display = 'none';
-    pctText.textContent = '0%';
-    ringFill.style.strokeDashoffset = CIRC;
-
-    // start the video loading in the background right away
-    frame.src = BTS_SRC;
-
-    if(btsTimer) clearInterval(btsTimer);
-    const stepMs = 140;
-    const totalSteps = Math.round(BTS_DURATION / stepMs);
-    let step = 0;
-    btsTimer = setInterval(()=>{
-      step++;
-      const pct = Math.min(100, Math.round((step/totalSteps)*100));
-      pctText.textContent = pct + '%';
-      ringFill.style.strokeDashoffset = CIRC - (CIRC * pct/100);
-      if(step >= totalSteps){
-        clearInterval(btsTimer);
-        btsTimer = null;
-        loading.style.display = 'none';
-        videoWrap.style.display = 'block';
-        caption.style.display = 'block';
-      }
-    }, stepMs);
+    const rawLink = frame.getAttribute('data-drive-link');
+    const id = driveIdFromLink(rawLink);
+    if(id){
+      frame.src = 'https://drive.google.com/file/d/' + id + '/preview';
+    }
   }
+
   function closeBTS(){
     document.getElementById('btsModalOverlay').classList.remove('show');
-    if(btsTimer){ clearInterval(btsTimer); btsTimer = null; }
     const frame = document.getElementById('btsFrame');
-    frame.src = ''; // stop playback and free the iframe
+    frame.src = ''; // stop playback
   }
   document.getElementById('btsModalOverlay').addEventListener('click', (e)=>{
     if(e.target.id==='btsModalOverlay') closeBTS();
@@ -1664,15 +1573,24 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
     }
   }
 
+  function driveIdFromLink(link){
+    const match = link.match(/[-\w]{25,}/);
+    return match ? match[0] : null;
+  }
   function openVideo(){
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.add('show');
+    const frame = document.getElementById('mainVideoFrame');
+    const ytId = frame.getAttribute('data-yt-id');
+    if(ytId){
+      frame.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0';
+    }
   }
   function closeVideo(){
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.remove('show');
     const frame = document.getElementById('mainVideoFrame');
-    frame.src = frame.src; // reload to stop playback
+    frame.src = ''; // clear to stop playback
     ['vnAudio','vnAudio2'].forEach(id=>{
       const audio = document.getElementById(id);
       if(audio && !audio.paused){
