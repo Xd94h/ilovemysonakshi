@@ -469,15 +469,18 @@
     padding:22px;
     max-width:560px;
     width:100%;
+    max-height:90vh;
+    overflow-y:auto;
     box-shadow:0 30px 70px -20px rgba(0,0,0,0.55);
   }
   .bts-video-wrap{
     position:relative;
-    width:100%;
+    width:auto;
     max-width:340px;
+    height:auto;
+    max-height:72vh;
+    aspect-ratio:9/16;
     margin:0 auto;
-    padding-bottom:110%;
-    height:0;
     border-radius:12px;
     overflow:hidden;
     box-shadow:0 10px 26px -12px rgba(90,31,39,0.4);
@@ -502,6 +505,57 @@
     background:#fff;
     color:#e02424;
     border:1.5px solid #e02424;
+  }
+
+  .bts-loading{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:46px 12px;
+    gap:18px;
+  }
+  .bts-loading-ring{
+    position:relative;
+    width:120px;
+    height:120px;
+  }
+  .bts-loading-ring svg{
+    width:100%;
+    height:100%;
+    transform:rotate(-90deg);
+  }
+  .bts-loading-ring .ring-track{
+    fill:none;
+    stroke:#f0dfe4;
+    stroke-width:7;
+  }
+  .bts-loading-ring .ring-fill{
+    fill:none;
+    stroke:var(--wine);
+    stroke-width:7;
+    stroke-linecap:round;
+    stroke-dasharray:276.4601;
+    stroke-dashoffset:276.4601;
+    transition:stroke-dashoffset 0.15s linear;
+  }
+  .bts-loading-pct{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:22px;
+    color:var(--wine-deep);
+  }
+  .bts-loading-label{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:14.5px;
+    color:#8a6a70;
+    text-align:center;
   }
 
   .voice-note{
@@ -1404,11 +1458,23 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
 <div class="modal-overlay" id="btsModalOverlay">
   <div class="modal-box bts-card">
     <button class="modal-close" onclick="closeBTS()">✕</button>
-    <div class="bts-video-wrap">
-      <iframe id="btsFrame" src="https://jumpshare.com/embed/b8IKGRkO7FdoNfBkbe45" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+    <div class="bts-loading" id="btsLoading">
+      <div class="bts-loading-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-track" cx="50" cy="50" r="44"></circle>
+          <circle class="ring-fill" id="btsRingFill" cx="50" cy="50" r="44"></circle>
+        </svg>
+        <span class="bts-loading-pct" id="btsLoadingPct">0%</span>
+      </div>
+      <p class="bts-loading-label" id="btsLoadingLabel">loading the moment...</p>
+    </div>
+
+    <div class="bts-video-wrap" id="btsVideoWrap" style="display:none;">
+      <iframe id="btsFrame" title="Behind the scene" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
     <!-- edit this caption freely -->
-    <p class="bts-caption">I LOBE UH DA MOST YAWLL..</p>
+    <p class="bts-caption" id="btsCaption" style="display:none;">I LOBE UH DA MOST YAWLL..</p>
   </div>
 </div>
 
@@ -1425,14 +1491,54 @@ Ye videos record karne mai sabhi ne boht mehnat ki hai baby 😭😭 Like idk in
     document.body.appendChild(p);
   }
 
+  const BTS_SRC = 'https://jumpshare.com/embed/b8IKGRkO7FdoNfBkbe45';
+  const BTS_DURATION = 14000; // ms, loading screen duration
+  let btsTimer = null;
+
   function openBTS(){
     document.getElementById('btsModalOverlay').classList.add('show');
+
+    const loading = document.getElementById('btsLoading');
+    const videoWrap = document.getElementById('btsVideoWrap');
+    const caption = document.getElementById('btsCaption');
+    const pctText = document.getElementById('btsLoadingPct');
+    const ringFill = document.getElementById('btsRingFill');
+    const frame = document.getElementById('btsFrame');
+    const CIRC = 276.4601;
+
+    // reset to loading state
+    loading.style.display = 'flex';
+    videoWrap.style.display = 'none';
+    caption.style.display = 'none';
+    pctText.textContent = '0%';
+    ringFill.style.strokeDashoffset = CIRC;
+
+    // start the video loading in the background right away
+    frame.src = BTS_SRC;
+
+    if(btsTimer) clearInterval(btsTimer);
+    const stepMs = 140;
+    const totalSteps = Math.round(BTS_DURATION / stepMs);
+    let step = 0;
+    btsTimer = setInterval(()=>{
+      step++;
+      const pct = Math.min(100, Math.round((step/totalSteps)*100));
+      pctText.textContent = pct + '%';
+      ringFill.style.strokeDashoffset = CIRC - (CIRC * pct/100);
+      if(step >= totalSteps){
+        clearInterval(btsTimer);
+        btsTimer = null;
+        loading.style.display = 'none';
+        videoWrap.style.display = 'block';
+        caption.style.display = 'block';
+      }
+    }, stepMs);
   }
   function closeBTS(){
     document.getElementById('btsModalOverlay').classList.remove('show');
-    const frame = document.querySelector('.bts-video-wrap iframe');
-    const src = frame.src;
-    frame.src = src; // reload to stop playback
+    if(btsTimer){ clearInterval(btsTimer); btsTimer = null; }
+    const frame = document.getElementById('btsFrame');
+    frame.src = ''; // stop playback and free the iframe
   }
   document.getElementById('btsModalOverlay').addEventListener('click', (e)=>{
     if(e.target.id==='btsModalOverlay') closeBTS();
